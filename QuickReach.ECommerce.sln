@@ -1,0 +1,53 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.28803.452
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "QuickReach.ECommerce.Infra.Data", "QuickReach.ECommerce.Infra.Data\QuickReach.ECommerce.Infra.Data.csproj", "{CD7EDE23-8C09-473A-B9A9-EF2D181C67D0}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "QuickReach.ECommerce.Domain", "QuickReach.ECommerce.Domain\QuickReach.ECommerce.Domain.csproj", "{DF35220B-3F10-448E-A05D-AEC017B0E4A0}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "QuickReach.ECommerce.Domain.Models", "QuickReach.ECommerce.Domain.Models\QuickReach.ECommerce.Domain.Models.csproj", "{B374D34A-DE4B-4A0D-9192-DABAD160113D}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "3.0 Domain", "3.0 Domain", "{D50BB9A5-1F71-45A4-B716-CFA76D2DD4C8}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "4.0 Infrastructure", "4.0 Infrastructure", "{D867542C-3222-4799-8AF0-E79901143C37}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "QuickReach.ECommerce.Infra.Data.Tests", "QuickReach.ECommerce.Infra.Data.Tests\QuickReach.ECommerce.Infra.Data.Tests.csproj", "{CC306BE5-34E7-41BF-A25F-1917A54D4486}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{CD7EDE23-8C09-473A-B9A9-EF2D181C67D0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CD7EDE23-8C09-473A-B9A9-EF2D181C67D0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CD7EDE23-8C09-473A-B9A9-EF2D181C67D0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CD7EDE23-8C09-473A-B9A9-EF2D181C67D0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DF35220B-3F10-448E-A05D-AEC017B0E4A0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DF35220B-3F10-448E-A05D-AEC017B0E4A0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DF35220B-3F10-448E-A05D-AEC017B0E4A0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DF35220B-3F10-448E-A05D-AEC017B0E4A0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B374D34A-DE4B-4A0D-9192-DABAD160113D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B374D34A-DE4B-4A0D-9192-DABAD160113D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B374D34A-DE4B-4A0D-9192-DABAD160113D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B374D34A-DE4B-4A0D-9192-DABAD160113D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CC306BE5-34E7-41BF-A25F-1917A54D4486}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CC306BE5-34E7-41BF-A25F-1917A54D4486}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CC306BE5-34E7-41BF-A25F-1917A54D4486}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CC306BE5-34E7-41BF-A25F-1917A54D4486}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{CD7EDE23-8C09-473A-B9A9-EF2D181C67D0} = {D867542C-3222-4799-8AF0-E79901143C37}
+		{DF35220B-3F10-448E-A05D-AEC017B0E4A0} = {D50BB9A5-1F71-45A4-B716-CFA76D2DD4C8}
+		{B374D34A-DE4B-4A0D-9192-DABAD160113D} = {D50BB9A5-1F71-45A4-B716-CFA76D2DD4C8}
+		{CC306BE5-34E7-41BF-A25F-1917A54D4486} = {D867542C-3222-4799-8AF0-E79901143C37}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {ECA80338-446A-469C-AF96-C689FAF87794}
+	EndGlobalSection
+EndGlobal
