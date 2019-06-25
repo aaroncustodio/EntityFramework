@@ -96,7 +96,7 @@ namespace QuickReach.ECommerce.Infra.Data.Tests
             Assert.True(list.Count() == 5);
 
             //cleanup
-            list = sut.Retrieve(0, 20);
+            list = sut.Retrieve(0, Int32.MaxValue);
             foreach(var i in list)
             {
                 sut.Delete(i.ID);
@@ -130,13 +130,6 @@ namespace QuickReach.ECommerce.Infra.Data.Tests
             //arrange
             var context = new ECommerceDbContext();
             var sut = new CategoryRepository(context);
-
-            var oldCategory1 = new Category
-            {
-                Name = "Sweets",
-                Description = "Matamis yo."
-            };
-            sut.Create(oldCategory1);
 
             var oldCategory = new Category
             {
