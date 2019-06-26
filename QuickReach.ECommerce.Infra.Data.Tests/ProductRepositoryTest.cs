@@ -319,11 +319,11 @@ namespace QuickReach.ECommerce.Infra.Data.Tests
             {
                 var sut = new ProductRepository(context);
 
-                var actual = sut.Retrieve(product.ID);
-                actual.Name = "Hany2";
-                actual.Description = "New desc.";
-                actual.Price = 5;
-                actual.ImageURL = "newURL";
+                var actual = context.Products.Find(product.ID);
+                actual.Name = "Frutos";
+                actual.Description = "Manufactured by ACS";
+                actual.Price = 1;
+                actual.ImageURL = "https://www.QuickReach.com/ECommerce/Products/Frutos.jpg";
 
                 //act
                 var expected = sut.Update(actual.ID, actual);

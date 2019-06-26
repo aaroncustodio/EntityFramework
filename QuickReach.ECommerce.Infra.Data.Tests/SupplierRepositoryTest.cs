@@ -7,7 +7,6 @@ using QuickReach.ECommerce.Infra.Data.Repositories;
 using QuickReach.ECommerce.Domain.Models;
 using Microsoft.Data.Sqlite;
 using Microsoft.EntityFrameworkCore;
-//using Microsoft.EntityFrameworkCore.InMemory.Storage.Internal;
 
 namespace QuickReach.ECommerce.Infra.Data.Tests
 {
@@ -62,8 +61,14 @@ namespace QuickReach.ECommerce.Infra.Data.Tests
         public void Delete_WithValidSupplierID_RetrieveShouldReturnNull()
         {
             //arrange
+            var connectionBuilder = new SqliteConnectionStringBuilder()
+            {
+                DataSource = ":memory:"
+            };
+            var connection = new SqliteConnection(connectionBuilder.ConnectionString);
+
             var options = new DbContextOptionsBuilder<ECommerceDbContext>()
-                .UseInMemoryDatabase($"SupplierForTesting{Guid.NewGuid()}")
+                .UseSqlite(connection)
                 .Options;
 
             var supplier = new Supplier
@@ -75,6 +80,9 @@ namespace QuickReach.ECommerce.Infra.Data.Tests
 
             using (var context = new ECommerceDbContext(options))
             {
+                context.Database.OpenConnection();
+                context.Database.EnsureCreated();
+
                 context.Suppliers.Add(supplier);
                 context.SaveChanges();
             }
@@ -228,7 +236,7 @@ namespace QuickReach.ECommerce.Infra.Data.Tests
                 sut.Update(expected.ID, expected);
 
                 //assert
-                var actual = sut.Retrieve(oldSupplier.ID);
+                var actual = context.Suppliers.Find(oldSupplier.ID);
 
                 Assert.Equal(actual.Name, expected.Name);
                 Assert.Equal(actual.Description, expected.Description);
