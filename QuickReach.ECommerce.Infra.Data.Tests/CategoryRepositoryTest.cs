@@ -124,6 +124,8 @@ namespace QuickReach.ECommerce.Infra.Data.Tests
             Assert.Null(actual);
         }
 
+        //delete throws exception test
+
         [Fact]
         public void Update_WithValidEntity_RetrieveShouldReturnUpdatedEntity()
         {

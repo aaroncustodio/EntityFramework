@@ -11,7 +11,7 @@ namespace QuickReach.ECommerce.Infra.Data.Repositories
     public abstract class RepositoryBase<TEntity>
         : IRepository<TEntity> where TEntity : EntityBase
     {
-        private readonly ECommerceDbContext context;
+        protected readonly ECommerceDbContext context;
         public RepositoryBase(ECommerceDbContext context)
         {
             this.context = context;
