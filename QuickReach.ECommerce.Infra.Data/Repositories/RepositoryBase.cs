@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using QuickReach.ECommerce.Domain.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace QuickReach.ECommerce.Infra.Data.Repositories
 {
@@ -17,7 +18,7 @@ namespace QuickReach.ECommerce.Infra.Data.Repositories
             this.context = context;
         }
 
-        public TEntity Create(TEntity newEntity)
+        public virtual TEntity Create(TEntity newEntity)
         {
             this.context.Set<TEntity>()
                         .Add(newEntity);
@@ -25,17 +26,21 @@ namespace QuickReach.ECommerce.Infra.Data.Repositories
             return newEntity;
         }
 
-        public void Delete(int entityId)
+        public virtual void Delete(int entityId)
         {
             var entityToRemove = Retrieve(entityId);
+
             this.context.Remove<TEntity>(entityToRemove);
             this.context.SaveChanges();
         }
 
-        public TEntity Retrieve(int entityId)
+        public virtual TEntity Retrieve(int entityId)
         {
-            var entity = this.context.Find<TEntity>(entityId);
-
+            var entity = this.context
+                         .Set<TEntity>()
+                         .AsNoTracking()
+                         .FirstOrDefault(c => c.ID == entityId);
+                
             return entity;
         }
 
@@ -43,9 +48,9 @@ namespace QuickReach.ECommerce.Infra.Data.Repositories
         public IEnumerable<TEntity> Retrieve(int skip = 0, int count = 10)
         {
             var result = this.context.Set<TEntity>()
-                             .Skip(skip)
-                             .Take(count)
-                             .ToList();
+                         .Skip(skip)
+                         .Take(count)
+                         .ToList();
 
             return result;
         }

@@ -11,10 +11,10 @@ namespace QuickReach.ECommerce.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class ProductsController : ControllerBase
+    public class SuppliersController : ControllerBase
     {
-        private readonly IProductRepository repository;
-        public ProductsController(IProductRepository repository)
+        private readonly ISupplierRepository repository;
+        public SuppliersController(ISupplierRepository repository)
         {
             this.repository = repository;
         }
@@ -22,41 +22,41 @@ namespace QuickReach.ECommerce.API.Controllers
         [HttpGet]
         public IActionResult Get(string search = "", int skip = 0, int count = 10)
         {
-            var products = repository.Retrieve(search, skip, count);
-            return Ok(products);
+            var suppliers = repository.Retrieve(search, skip, count);
+            return Ok(suppliers);
         }
 
         [HttpGet("{id}")]
         public IActionResult Get(int id)
         {
-            var product = this.repository.Retrieve(id);
-            return Ok(product);
+            var supplier = this.repository.Retrieve(id);
+            return Ok(supplier);
         }
 
         [HttpPost]
-        public IActionResult Post([FromBody] Product newProduct)
+        public IActionResult Post([FromBody] Supplier newSupplier)
         {
             if (!this.ModelState.IsValid)
             {
                 return BadRequest();
             }
 
-            this.repository.Create(newProduct);
+            this.repository.Create(newSupplier);
 
-            return CreatedAtAction(nameof(this.Get), new { id = newProduct.ID }, newProduct);
+            return CreatedAtAction(nameof(this.Get), new { id = newSupplier.ID }, newSupplier);
         }
 
         [HttpPut("{id}")]
-        public IActionResult Put(int id, [FromBody] Product product)
+        public IActionResult Put(int id, [FromBody] Supplier supplier)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest();
             }
 
-            this.repository.Update(id, product);
+            this.repository.Update(id, supplier);
 
-            return Ok(product);
+            return Ok(supplier);
         }
 
         [HttpDelete("{id}")]

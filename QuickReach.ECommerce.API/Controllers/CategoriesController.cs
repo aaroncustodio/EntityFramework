@@ -6,8 +6,6 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using QuickReach.ECommerce.Domain;
 using QuickReach.ECommerce.Domain.Models;
-using QuickReach.ECommerce.Infra.Data;
-using QuickReach.ECommerce.Infra.Data.Repositories;
 
 namespace QuickReach.ECommerce.API.Controllers
 {
@@ -51,13 +49,22 @@ namespace QuickReach.ECommerce.API.Controllers
         [HttpPut("{id}")]
         public IActionResult Put(int id, [FromBody] Category category)
         {
+            //400
             if (!ModelState.IsValid)
             {
                 return BadRequest();
             }
 
+            //404
+            var entity = this.repository.Retrieve(id);
+            if (entity == null)
+            {
+                return NotFound();
+            }
+
             this.repository.Update(id, category);
 
+            //200
             return Ok(category);
         }
 

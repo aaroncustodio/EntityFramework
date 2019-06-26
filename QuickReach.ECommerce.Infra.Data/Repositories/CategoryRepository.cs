@@ -1,4 +1,5 @@
-﻿using QuickReach.ECommerce.Domain;
+﻿using Microsoft.EntityFrameworkCore;
+using QuickReach.ECommerce.Domain;
 using QuickReach.ECommerce.Domain.Models;
 using System;
 using System.Collections.Generic;
@@ -21,6 +22,7 @@ namespace QuickReach.ECommerce.Infra.Data.Repositories
 
         }
 
+        //an extended function added to the categoryrepository class
         public IEnumerable<Category> Retrieve(string search = "", int skip = 0, int count = 10)
         {
             var result = this.context.Categories
@@ -31,6 +33,33 @@ namespace QuickReach.ECommerce.Infra.Data.Repositories
                 .ToList();
 
             return result;
+        }
+
+        //includes the list of products when viewing a category
+        public override Category Retrieve(int entityId)
+        {
+            var entity = this.context.Categories
+                        .AsNoTracking()
+                        .Include(c => c.Products)
+                        .Where(c => c.ID == entityId)
+                        .FirstOrDefault();
+
+            return entity;
+        }
+
+        public override void Delete(int entityId)
+        {
+            //checks if foreign key exists
+            var CategoryHasProduct = this.context
+                .Products
+                .Where(c => c.CategoryID == entityId);
+
+            if (CategoryHasProduct.Count() != 0)
+            {
+                throw new System.Exception("Category has products, it cannot be deleted.");
+            }
+
+            base.Delete(entityId);
         }
     }
 }
