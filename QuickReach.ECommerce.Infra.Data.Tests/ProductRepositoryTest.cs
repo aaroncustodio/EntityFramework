@@ -8,6 +8,7 @@ using QuickReach.ECommerce.Domain.Models;
 using System.Collections;
 using Microsoft.Data.Sqlite;
 using Microsoft.EntityFrameworkCore;
+using QuickReach.ECommerce.Infra.Data.Tests.Utilities;
 
 namespace QuickReach.ECommerce.Infra.Data.Tests
 {
@@ -16,19 +17,7 @@ namespace QuickReach.ECommerce.Infra.Data.Tests
         [Fact]
         public void Create_WithValidProduct_ShouldAddProductToDatabase()
         {
-            #region Options
-            //arrange
-            var connectionBuilder = new SqliteConnectionStringBuilder()
-            {
-                DataSource = ":memory:"
-            };
-            var connection = new SqliteConnection(connectionBuilder.ConnectionString);
-
-            var options = new DbContextOptionsBuilder<ECommerceDbContext>()
-                    .UseSqlite(connection)
-                    .Options; 
-            #endregion
-
+            var options = ConnectionOptionHelper.SQLite();
 
             #region AddCategory
             var category = new Category
@@ -78,18 +67,7 @@ namespace QuickReach.ECommerce.Infra.Data.Tests
         [Fact]
         public void Create_ProductWithNoExistingCategory_ShouldThrowException()
         {
-            #region Options
-            //arrange
-            var connectionBuilder = new SqliteConnectionStringBuilder()
-            {
-                DataSource = ":memory:"
-            };
-            var connection = new SqliteConnection(connectionBuilder.ConnectionString);
-
-            var options = new DbContextOptionsBuilder<ECommerceDbContext>()
-                    .UseSqlite(connection)
-                    .Options;
-            #endregion
+            var options = ConnectionOptionHelper.SQLite();
 
             //for testing with existing category
             #region AddCategory
@@ -138,19 +116,7 @@ namespace QuickReach.ECommerce.Infra.Data.Tests
         [Fact]
         public void Delete_WithValidProductID_RetrieveShouldReturnNull()
         {
-            #region Options
-            //arrange
-            var connectionBuilder = new SqliteConnectionStringBuilder()
-            {
-                DataSource = ":memory:"
-            };
-            var connection = new SqliteConnection(connectionBuilder.ConnectionString);
-
-            var options = new DbContextOptionsBuilder<ECommerceDbContext>()
-                    .UseSqlite(connection)
-                    .Options;
-            #endregion
-
+            var options = ConnectionOptionHelper.SQLite();
 
             #region AddCategory
             var category = new Category
@@ -202,19 +168,7 @@ namespace QuickReach.ECommerce.Infra.Data.Tests
         [Fact]
         public void Retrieve_WithSkipAndCount_ShouldReturnCorrectListOfProducts()
         {
-            #region Options
-            //arrange
-            var connectionBuilder = new SqliteConnectionStringBuilder()
-            {
-                DataSource = ":memory:"
-            };
-            var connection = new SqliteConnection(connectionBuilder.ConnectionString);
-
-            var options = new DbContextOptionsBuilder<ECommerceDbContext>()
-                    .UseSqlite(connection)
-                    .Options;
-            #endregion
-
+            var options = ConnectionOptionHelper.SQLite();
 
             #region AddCategory
             var category = new Category
@@ -264,19 +218,7 @@ namespace QuickReach.ECommerce.Infra.Data.Tests
         [Fact]
         public void Retrieve_WithValidProductID_ShouldReturnTheProduct()
         {
-            #region Options
-            //arrange
-            var connectionBuilder = new SqliteConnectionStringBuilder()
-            {
-                DataSource = ":memory:"
-            };
-            var connection = new SqliteConnection(connectionBuilder.ConnectionString);
-
-            var options = new DbContextOptionsBuilder<ECommerceDbContext>()
-                    .UseSqlite(connection)
-                    .Options;
-            #endregion
-
+            var options = ConnectionOptionHelper.SQLite();
 
             #region AddCategory
             var category = new Category
@@ -327,19 +269,7 @@ namespace QuickReach.ECommerce.Infra.Data.Tests
         [Fact]
         public void Update_WithValidProduct_RetrieveShouldReturnUpdatedProduct()
         {
-            #region Options
-            //arrange
-            var connectionBuilder = new SqliteConnectionStringBuilder()
-            {
-                DataSource = ":memory:"
-            };
-            var connection = new SqliteConnection(connectionBuilder.ConnectionString);
-
-            var options = new DbContextOptionsBuilder<ECommerceDbContext>()
-                    .UseSqlite(connection)
-                    .Options;
-            #endregion
-
+            var options = ConnectionOptionHelper.SQLite();
 
             #region AddCategory
             var category = new Category
