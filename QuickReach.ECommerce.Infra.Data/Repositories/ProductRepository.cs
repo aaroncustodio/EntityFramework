@@ -30,18 +30,18 @@ namespace QuickReach.ECommerce.Infra.Data.Repositories
             return result;
         }
 
-        public override Product Create(Product newEntity)
-        {
-            var category = this.context
-                .Categories.Find(newEntity.CategoryID);
+        //public override Product Create(Product newEntity)
+        //{
+        //    var category = this.context
+        //        .Categories.Find(newEntity.CategoryID);
 
-            if (category == null)
-            {
-                throw new System.Exception(
-                    "Category does not exist, Product cannot be created.");
-            }
+        //    if (category == null)
+        //    {
+        //        throw new System.Exception(
+        //            "Category does not exist, Product cannot be created.");
+        //    }
 
-            return base.Create(newEntity);
-        }
+        //    return base.Create(newEntity);
+        //}
     }
 }

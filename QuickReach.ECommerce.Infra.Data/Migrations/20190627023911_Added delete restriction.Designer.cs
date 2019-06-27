@@ -9,8 +9,8 @@ using QuickReach.ECommerce.Infra.Data;
 namespace QuickReach.ECommerce.Infra.Data.Migrations
 {
     [DbContext(typeof(ECommerceDbContext))]
-    [Migration("20190624034019_Initial Migration")]
-    partial class InitialMigration
+    [Migration("20190627023911_Added delete restriction")]
+    partial class Addeddeleterestriction
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -29,6 +29,8 @@ namespace QuickReach.ECommerce.Infra.Data.Migrations
                     b.Property<string>("Description")
                         .IsRequired()
                         .HasMaxLength(255);
+
+                    b.Property<bool>("IsActive");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -54,6 +56,8 @@ namespace QuickReach.ECommerce.Infra.Data.Migrations
                     b.Property<string>("ImageURL")
                         .IsRequired();
 
+                    b.Property<bool>("IsActive");
+
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasMaxLength(40);
@@ -67,12 +71,33 @@ namespace QuickReach.ECommerce.Infra.Data.Migrations
                     b.ToTable("Product");
                 });
 
+            modelBuilder.Entity("QuickReach.ECommerce.Domain.Models.Supplier", b =>
+                {
+                    b.Property<int>("ID")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasMaxLength(255);
+
+                    b.Property<bool>("IsActive");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(40);
+
+                    b.HasKey("ID");
+
+                    b.ToTable("Supplier");
+                });
+
             modelBuilder.Entity("QuickReach.ECommerce.Domain.Models.Product", b =>
                 {
                     b.HasOne("QuickReach.ECommerce.Domain.Models.Category", "Category")
                         .WithMany("Products")
                         .HasForeignKey("CategoryID")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .OnDelete(DeleteBehavior.Restrict);
                 });
 #pragma warning restore 612, 618
         }

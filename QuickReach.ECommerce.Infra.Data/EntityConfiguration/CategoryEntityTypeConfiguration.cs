@@ -15,6 +15,10 @@ namespace QuickReach.ECommerce.Infra.Data.EntityConfiguration
             builder.Property(c => c.ID)
                    .IsRequired()
                    .ValueGeneratedOnAdd();
+            builder.HasMany(c => c.Products)
+                   .WithOne(p => p.Category)
+                   .OnDelete(DeleteBehavior.ClientSetNull);
+
         }
     }
 }

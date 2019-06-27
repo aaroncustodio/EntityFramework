@@ -39,27 +39,28 @@ namespace QuickReach.ECommerce.Infra.Data.Repositories
         public override Category Retrieve(int entityId)
         {
             var entity = this.context.Categories
-                        .AsNoTracking()
-                        .Include(c => c.Products)
-                        .Where(c => c.ID == entityId)
-                        .FirstOrDefault();
+                .AsNoTracking()
+                .Include(c => c.Products)
+                .Where(c => c.ID == entityId)
+                .FirstOrDefault();
 
             return entity;
         }
 
-        public override void Delete(int entityId)
-        {
-            //checks if foreign key exists
-            var CategoryHasProduct = this.context
-                .Products
-                .Where(c => c.CategoryID == entityId);
+        //public override void Delete(int entityId)
+        //{
+        //    //checks if foreign key exists
+        //    var CategoryHasProduct =
+        //        this.context
+        //            .Products
+        //            .Where(c => c.CategoryID == entityId);
 
-            if (CategoryHasProduct.Count() != 0)
-            {
-                throw new System.Exception("Category has products, it cannot be deleted.");
-            }
+        //    if (CategoryHasProduct.Count() != 0)
+        //    {
+        //        throw new System.Exception("Category has products, it cannot be deleted.");
+        //    }
 
-            base.Delete(entityId);
-        }
+        //    base.Delete(entityId);
+        //}
     }
 }

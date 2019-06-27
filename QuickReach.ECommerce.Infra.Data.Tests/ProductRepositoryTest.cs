@@ -131,7 +131,7 @@ namespace QuickReach.ECommerce.Infra.Data.Tests
                 var sut = new ProductRepository(context);
 
                 //act & assert
-                Assert.Throws<Exception>(() => sut.Create(product));
+                Assert.Throws<DbUpdateException>(() => sut.Create(product));
             }
         }
 
