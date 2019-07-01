@@ -16,8 +16,7 @@ namespace QuickReach.ECommerce.Infra.Data.EntityConfiguration
                    .IsRequired()
                    .ValueGeneratedOnAdd();
 
-            builder.HasKey(cid => cid.CustomerId);
-        
+            //builder.HasKey(cid => cid.CustomerId);
         }
     }
 }
