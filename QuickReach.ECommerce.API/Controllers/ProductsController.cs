@@ -1,11 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Threading.Tasks;
+using Dapper;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using QuickReach.ECommerce.API.ViewModel;
 using QuickReach.ECommerce.Domain;
 using QuickReach.ECommerce.Domain.Models;
+using QuickReach.ECommerce.Infra.Data;
 
 namespace QuickReach.ECommerce.API.Controllers
 {
@@ -14,9 +19,13 @@ namespace QuickReach.ECommerce.API.Controllers
     public class ProductsController : ControllerBase
     {
         private readonly IProductRepository repository;
-        public ProductsController(IProductRepository repository)
+        private readonly ECommerceDbContext context;
+        public ProductsController(
+            IProductRepository repository,
+            ECommerceDbContext context)
         {
             this.repository = repository;
+            this.context = context;
         }
 
         [HttpGet]

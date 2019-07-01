@@ -17,8 +17,8 @@ namespace QuickReach.ECommerce.Infra.Data.EntityConfiguration
             builder.HasOne(cr => cr.Category)
                    .WithMany(c => c.ProductCategories)
                    .HasForeignKey("CategoryID");
-            builder.HasOne(cr => cr.Product)
-                   .WithMany(c => c.ProductCategories)
+            builder.HasOne(pr => pr.Product)
+                   .WithMany(p => p.ProductCategories)
                    .HasForeignKey("ProductID");
         }
     }

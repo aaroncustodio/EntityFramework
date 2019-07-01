@@ -6,6 +6,9 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using QuickReach.ECommerce.Domain;
 using QuickReach.ECommerce.Domain.Models;
+using Dapper;
+using System.Data.SqlClient;
+using QuickReach.ECommerce.API.ViewModel;
 
 namespace QuickReach.ECommerce.API.Controllers
 {
@@ -37,6 +40,31 @@ namespace QuickReach.ECommerce.API.Controllers
         {
             var category = this.repository.Retrieve(id);
             return Ok(category);
+        }
+
+        [HttpGet("{id}/products")]
+        public IActionResult GetProductsByCategory(int id)
+        {
+            var connString = "Server=.;Database=QuickReachDb;Integrated Security=true;";
+            var conn = new SqlConnection(connString);
+
+            var parameter = new DynamicParameters();
+            parameter.Add("@categoryId", id);
+
+            var result = conn.Query<SearchItemViewModel>(
+                @"SELECT
+                        pc.ProductID, 
+                        pc.CategoryID, 
+                        p.Name, 
+                        p.Description, 
+                        p.Price, 
+                        p.ImageURL
+                  FROM  Product p INNER JOIN ProductCategory pc
+                  ON    p.ID = pc.ProductID
+                  WHERE pc.CategoryID = @categoryId", parameter)
+                  .ToList();
+
+            return Ok(result);
         }
 
         [HttpPost]

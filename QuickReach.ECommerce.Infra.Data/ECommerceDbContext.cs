@@ -38,6 +38,7 @@ namespace QuickReach.ECommerce.Infra.Data
 
             modelBuilder.ApplyConfiguration(new CategoryRollupEntityTypeConfiguration());
             modelBuilder.ApplyConfiguration(new ProductCategoryEntityTypeConfiguration());
+            modelBuilder.ApplyConfiguration(new ProductSupplierEntityTypeConfiguration());
 
             foreach (var relationship in modelBuilder.Model.GetEntityTypes().Where(e => !e.IsOwned()).SelectMany(e => e.GetForeignKeys()))
             {
