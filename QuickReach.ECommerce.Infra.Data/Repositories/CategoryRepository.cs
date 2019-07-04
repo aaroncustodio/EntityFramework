@@ -19,7 +19,6 @@ namespace QuickReach.ECommerce.Infra.Data.Repositories
             ECommerceDbContext context)
             : base(context)
         {
-
         }
 
         //an extended function added to the categoryrepository class

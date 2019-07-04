@@ -1,26 +1,25 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
+﻿using Dapper;
 using Microsoft.AspNetCore.Mvc;
+using QuickReach.ECommerce.API.ViewModel;
 using QuickReach.ECommerce.Domain;
 using QuickReach.ECommerce.Domain.Models;
-using Dapper;
+using System;
+using System.Collections.Generic;
 using System.Data.SqlClient;
-using QuickReach.ECommerce.API.ViewModel;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace QuickReach.ECommerce.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class CategoriesController : ControllerBase
+    public class ManufacturersController : ControllerBase
     {
-        private readonly ICategoryRepository repository;
+        private readonly IManufacturerRepository repository;
         private readonly IProductRepository productRepository;
 
-        public CategoriesController(
-            ICategoryRepository repository, 
+        public ManufacturersController(
+            IManufacturerRepository repository,
             IProductRepository productRepository)
         {
             this.repository = repository;
@@ -28,17 +27,17 @@ namespace QuickReach.ECommerce.API.Controllers
         }
 
         [HttpGet]
-        public IActionResult Get(string search ="", int skip = 0, int count = 10)
+        public IActionResult Get(string search = "", int skip = 0, int count = 10)
         {
-            var categories = repository.Retrieve(search, skip, count);
-            return Ok(categories);
+            var manufacturers = repository.Retrieve(search, skip, count);
+            return Ok(manufacturers);
         }
 
         [HttpGet("{id}")]
         public IActionResult Get(int id)
         {
-            var category = this.repository.Retrieve(id);
-            return Ok(category);
+            var manufacturer = this.repository.Retrieve(id);
+            return Ok(manufacturer);
         }
 
         [HttpGet("{id}/products")]
@@ -48,70 +47,70 @@ namespace QuickReach.ECommerce.API.Controllers
             var conn = new SqlConnection(connString);
 
             var parameter = new DynamicParameters();
-            parameter.Add("@categoryId", id);
+            parameter.Add("@manufacturerId", id);
 
             var result = conn.Query<SearchItemViewModel>(
                 @"SELECT
                         pc.ProductID, 
-                        pc.CategoryID, 
+                        pc.ManufacturerID, 
                         p.Name, 
                         p.Description, 
                         p.Price, 
                         p.ImageURL
-                  FROM  Product p INNER JOIN ProductCategory pc
+                  FROM  Product p INNER JOIN ProductManufacturer pc
                   ON    p.ID = pc.ProductID
-                  WHERE pc.CategoryID = @categoryId", parameter)
+                  WHERE pc.ManufacturerID = @manufacturerId", parameter)
                   .ToList();
 
             return Ok(result);
         }
 
         [HttpPost]
-        public IActionResult Post([FromBody] Category newCategory)
+        public IActionResult Post([FromBody] Manufacturer newManufacturer)
         {
             if (!this.ModelState.IsValid)
             {
                 return BadRequest();
             }
 
-            this.repository.Create(newCategory);
+            this.repository.Create(newManufacturer);
 
-            return CreatedAtAction(nameof(this.Get), new {id=newCategory.ID}, newCategory);
+            return CreatedAtAction(nameof(this.Get), new { id = newManufacturer.ID }, newManufacturer);
         }
 
         [HttpPut("{id}/products")]
-        public IActionResult PostCategoryProduct(int id, [FromBody] ProductCategory entity)
+        public IActionResult PostManufacturerProduct(int id, [FromBody] ProductManufacturer entity)
         {
             if (!this.ModelState.IsValid)
             {
                 return BadRequest();
             }
-            var category = repository.Retrieve(id);
-            if (category == null)
+            var manufacturer = repository.Retrieve(id);
+            if (manufacturer == null)
             {
                 return NotFound();
             }
-            if (productRepository.Retrieve(entity.ProductID)== null)
+            if (productRepository.Retrieve(entity.ProductID) == null)
             {
                 return NotFound();
             }
 
-            //adds the productcategory to the categories IEnumerable ProductCategory property
-            category.AddProduct(entity);
+            //adds the productmanufacturer to the Manufacturer's IEnumerable ProductManufacturer property
+            manufacturer.AddProduct(entity);
 
-            repository.Update(id, category);
-            return Ok(category);
+            repository.Update(id, manufacturer);
+            return Ok(manufacturer);
         }
 
         [HttpPut("{id}/products/{productId}")]
-        public IActionResult DeleteCategoryProduct(int id, int productId)
+        public IActionResult DeleteManufacturerProduct(int id, int productId)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest();
             }
-            var category = repository.Retrieve(id);
-            if (category == null)
+            var manufacturer = repository.Retrieve(id);
+            if (manufacturer == null)
             {
                 return NotFound();
             }
@@ -119,13 +118,13 @@ namespace QuickReach.ECommerce.API.Controllers
             {
                 return NotFound();
             }
-            category.RemoveProduct(productId);
-            repository.Update(id, category);
+            manufacturer.RemoveProduct(productId);
+            repository.Update(id, manufacturer);
             return Ok();
         }
 
         [HttpPut("{id}")]
-        public IActionResult Put(int id, [FromBody] Category category)
+        public IActionResult Put(int id, [FromBody] Manufacturer manufacturer)
         {
             //400
             if (!ModelState.IsValid)
@@ -140,10 +139,10 @@ namespace QuickReach.ECommerce.API.Controllers
                 return NotFound();
             }
 
-            this.repository.Update(id, category);
+            this.repository.Update(id, manufacturer);
 
             //200
-            return Ok(category);
+            return Ok(manufacturer);
         }
 
         [HttpDelete("{id}")]

@@ -31,5 +31,7 @@ namespace QuickReach.ECommerce.Domain.Models
         public string FirstName { get; set; }
         [Required]
         public string LastName { get; set; }
+
+        public IEnumerable<CustomerCart> CustomerCarts { get; set; }
     }
 }

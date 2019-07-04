@@ -15,6 +15,9 @@ namespace QuickReach.ECommerce.Domain
         IEnumerable<TEntity> Retrieve
             (int skip = 0, int count = 10);
 
+        IEnumerable<TEntity> Retrieve
+            (string search = "", int skip = 0, int count = 10);
+
         TEntity Update(int entityId, TEntity entity);
 
         void Delete(int entityId);

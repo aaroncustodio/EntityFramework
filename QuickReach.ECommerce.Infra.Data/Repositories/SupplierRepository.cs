@@ -16,7 +16,6 @@ namespace QuickReach.ECommerce.Infra.Data.Repositories
             ECommerceDbContext context)
             : base(context)
         {
-
         }
 
         public IEnumerable<Supplier> Retrieve(string search = "", int skip = 0, int count = 10)
